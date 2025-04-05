@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stopwatch</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #efeaea;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .stopwatch {
+      background: #1e1e1e;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    .time {
+      font-size: 48px;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+    }
+
+    .buttons button {
+      background: #2ecc71;
+      border: none;
+      padding: 12px 20px;
+      margin: 0 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .buttons button:hover {
+      background: #27ae60;
+    }
+
+    .buttons button.pause {
+      background: #e67e22;
+    }
+
+    .buttons button.pause:hover {
+      background: #d35400;
+    }
+
+    .buttons button.reset {
+      background: #e74c3c;
+    }
+
+    .buttons button.reset:hover {
+      background: #c0392b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stopwatch">
+    <div class="time" id="display">00:00:00</div>
+    <div class="buttons">
+      <button id="start">Start</button>
+      <button class="pause" id="pause">Pause</button>
+      <button class="reset" id="reset">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    let startTime, updatedTime, difference, timerInterval;
+    let running = false;
+
+    function updateDisplay(difference) {
+      let ms = parseInt((difference % 1000) / 10); // untuk mili detik
+      let s = Math.floor((difference / 1000) % 60); // untuk detik
+      let m = Math.floor((difference / 60000) % 60); // untuk menit
+
+      ms = ms < 10 ? "0" + ms : ms;
+      s = s < 10 ? "0" + s : s;
+      m = m < 10 ? "0" + m : m;
+
+      $('#display').text(`${m}:${s}:${ms}`);
+
+    }
+
+    $('#start').click(function () {
+      if (!running) { // jika tidak running dia akan jalan jika tidak running karena pause akan tetap menjaga value dari time
+        startTime = new Date().getTime() - (difference || 0);
+        timerInterval = setInterval(() => {
+          updatedTime = new Date().getTime();
+          difference = updatedTime - startTime;
+          updateDisplay(difference);
+        }, 10);
+        running = true;
+      } else { // jika running akan memulai dari awal lagi
+        startTime = new Date().getTime() - (0);
+        timerInterval = setInterval(() => {
+          updatedTime = new Date().getTime();
+          difference = updatedTime - startTime;
+          updateDisplay(difference);
+        }, 10);
+      }
+    });
+
+    $('#pause').click(function () { // menghentikan timeInterval
+      if (running) {
+        clearInterval(timerInterval);
+        running = false;
+      }
+    });
+
+    $('#reset').click(function () { // menghentikan timerInterval lalu memberikan value nya 0
+      clearInterval(timerInterval);
+      running = false;
+      difference = 0;
+      $('#display').text("00:00:00");
+    });
+  </script>
+
+</body>
+</html>

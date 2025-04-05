@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Mode</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #f1f1f1;
+            --card-bg: #1e1e1e;
+            --accent: #6c5ce7;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --border: #333;
+            --toggle-bg: #333;
+            --toggle-circle: #f1f1f1;
+        }
+
+        .light-mode {
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --accent: #FF3333;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --border: #e0e0e0;
+            --toggle-bg: #dadada;
+            --toggle-circle: #FF3333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color); /* -- untuk mendefinisikan agar sesuai dengan theme jika light mode maka akan menyesuaikan */
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border); 
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .toggle-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-label {
+            font-size: 0.9rem;
+        }
+
+        .toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: var(--toggle-bg);
+            cursor: pointer;
+            box-shadow: inset 0 0 5px var(--shadow);
+            
+        }
+
+        .toggle-circle {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--toggle-circle);
+            box-shadow: 0 2px 5px var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .light-mode .toggle-circle {
+            transform: translateX(30px);
+        }
+
+        .moon, .sun {
+            font-size: 1rem;
+            margin: 0 5px;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card2{
+            background-color: var(--card-bg);
+        }
+
+        .card-img {
+            height: 200px;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .card-content {
+            padding-left: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .card-text {
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 2px 5px var(--shadow);
+            margin-bottom: 20px;
+            margin-left: 20px;
+            align-self: flex-start;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Challenge Toogle</div>
+            <div class="toggle-wrapper">
+                <span class="toggle-label moon">🌙</span>
+                <div class="toggle">
+                    <div class="toggle-circle"></div>
+                </div>
+                <span class="toggle-label sun">☀️</span>
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="card">
+                <div class="card-img">🏞️</div>
+                <div class="card2">
+                    <div class="card-content">
+                        <h2 class="card-title">Pemandangan Alam</h2>
+                        <p class="card-text">Nikmati keindahan alam dengan tampilan yang nyaman di mata. Toggle tema untuk pengalaman melihat yang lebih baik di siang atau malam hari. </p>
+                    </div>
+                </div>
+                <a href="#" class="btn">Lihat Detail</a>
+            </div>
+
+            <div class="card">
+                <div class="card-img">💻</div>
+                    <div class="card2">
+                        <div class="card-content">
+                            <h2 class="card-title">Mode Developer</h2>
+                            <p class="card-text">Mode gelap sangat disukai oleh para developer, tetapi mode terang juga penting saat bekerja di tempat dengan cahaya yang terang.</p>
+                        </div>
+                    </div>
+
+                <a href="#" class="btn">Pelajari</a>
+            </div>
+
+            <div class="card">
+                <div class="card-img">📚</div>
+                    <div class="card2">
+                        <div class="card-content">
+                            <h2 class="card-title">Artikel Membaca</h2>
+                            <p class="card-text">Sesuaikan tema dengan kebutuhan membaca Anda. Mode gelap mengurangi kelelahan mata saat malam, mode terang lebih baik di siang hari.</p>
+                        </div>
+                <a href="#" class="btn">Baca Selengkapnya</a>
+            </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© Iseng doang bang</p>
+        </footer>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.toggle').click(function() {
+                $('body').toggleClass('light-mode');
+                
+                if ($('body').hasClass('light-mode')) {
+                    localStorage.setItem('theme', 'light'); // nge set theme ke localstorage
+                } else {
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+
+            const savedTheme = localStorage.getItem('theme'); // ngambil apa yang telah di set
+            if (savedTheme === 'light') {
+                $('body').addClass('light-mode');
+            }
+        });
+    </script>
+</body>
+</html>
